@@ -399,9 +399,8 @@ This library is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contributing
 
-Contributions are welcome! Please read our contributing guidelines before submitting pull requests.
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) before submitting pull requests.
 
 ## Support
 
 For support, please open an issue on GitHub.
-
