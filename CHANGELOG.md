@@ -5,9 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.0 - 2025-11-28
+
+Initial release.
+
 ## [Unreleased]
 
 ### Added
+
 - Initial release of the Digipost PHP SDK
 - Support for sending messages to Digipost recipients
 - Support for identifying recipients by personal ID, Digipost address, email, or phone
@@ -24,4 +29,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPStan level 9 static analysis
 - Pest PHP test suite
 - Laravel Pint code style
-
