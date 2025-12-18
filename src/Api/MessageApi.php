@@ -60,8 +60,7 @@ final readonly class MessageApi
     public function search(string $query): Recipients
     {
         $response = $this->httpClient->get(
-            '/recipients/search',
-            ['search' => $query],
+            "/recipients/search/{$query}",
         );
 
         return Recipients::fromXml($response);
