@@ -175,9 +175,15 @@ final readonly class DigipostHttpClient
             $headers['Content-Type'] = 'application/vnd.digipost-v8+xml';
         }
 
-        // Sign the request
+        // Calculate X-Content-SHA256 header (hash of request body)
+        // Only include for requests with body content
         $bodyString = $body instanceof StreamInterface ? (string) $body : ($body ?? '');
-        $signature = $this->requestSigner->sign($method, $url, $bodyString, $headers);
+        if ($bodyString !== '') {
+            $headers['X-Content-SHA256'] = $this->requestSigner->calculateContentHash($bodyString);
+        }
+
+        // Sign the request using method, URL, and headers
+        $signature = $this->requestSigner->sign($method, $url, $headers);
         $headers['X-Digipost-Signature'] = $signature;
 
         $request = new Request($method, $url, $headers, $body);

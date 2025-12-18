@@ -30,7 +30,7 @@ final readonly class ArchiveApi
      */
     public function getArchives(): Archives
     {
-        $response = $this->httpClient->get("/archives");
+        $response = $this->httpClient->get('/archives');
 
         return Archives::fromXml($response);
     }

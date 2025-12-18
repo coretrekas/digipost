@@ -8,6 +8,16 @@ use Coretrek\Digipost\Security\Signer;
 
 /**
  * Signs HTTP requests for the Digipost API.
+ *
+ * The signature string is built as follows:
+ * - uppercase(verb)
+ * - lowercase(path)
+ * - "date: " + dateHeader
+ * - "x-content-sha256: " + sha256Header
+ * - "x-digipost-userid: " + senderId
+ * - lowercase(urlencode(queryParams))
+ *
+ * The string is then signed using SHA-256 with RSA encryption.
  */
 final readonly class RequestSigner
 {
@@ -18,46 +28,61 @@ final readonly class RequestSigner
     /**
      * Sign an HTTP request.
      *
-     * @param array<string, string> $headers
+     * @param array<string, string> $headers Headers must include Date, X-Content-SHA256, and X-Digipost-UserId
      *
-     * @return string The signature
+     * @return string The base64-encoded signature
      */
-    public function sign(string $method, string $url, string $body, array $headers): string
+    public function sign(string $method, string $url, array $headers): string
     {
-        $canonicalRequest = $this->buildCanonicalRequest($method, $url, $body, $headers);
+        $canonicalRequest = $this->buildCanonicalRequest($method, $url, $headers);
 
         return $this->signer->sign($canonicalRequest);
     }
 
     /**
+     * Calculate the SHA-256 hash of the content for the X-Content-SHA256 header.
+     */
+    public function calculateContentHash(string $content): string
+    {
+        return base64_encode(hash('sha256', $content, true));
+    }
+
+    /**
      * Build the canonical request string for signing.
+     *
+     * Each line ends with a newline character (\n), including the last line.
      *
      * @param array<string, string> $headers
      */
-    private function buildCanonicalRequest(string $method, string $url, string $body, array $headers): string
+    private function buildCanonicalRequest(string $method, string $url, array $headers): string
     {
-        $parts = [];
-
-        // HTTP method
-        $parts[] = strtoupper($method);
-
-        // URL path
         $parsedUrl = parse_url($url);
         $path = $parsedUrl['path'] ?? '/';
-        $parts[] = $path;
+        $queryString = $parsedUrl['query'] ?? '';
 
-        // Date header
-        $parts[] = $headers['Date'] ?? gmdate('D, d M Y H:i:s T');
+        $parts = [];
 
-        // User ID header
-        $parts[] = $headers['X-Digipost-UserId'] ?? '';
+        // HTTP method (uppercase)
+        $parts[] = strtoupper($method);
 
-        // Content-MD5 (if body is present)
-        if ($body !== '') {
-            $contentMd5 = base64_encode(md5($body, true));
-            $parts[] = $contentMd5;
+        // Path (lowercase)
+        $parts[] = strtolower($path);
+
+        // Date header with prefix
+        $parts[] = 'date: '.($headers['Date'] ?? '');
+
+        // X-Content-SHA256 header with prefix (only for requests with body)
+        if (isset($headers['X-Content-SHA256']) && $headers['X-Content-SHA256'] !== '') {
+            $parts[] = 'x-content-sha256: '.$headers['X-Content-SHA256'];
         }
 
-        return implode("\n", $parts);
+        // X-Digipost-UserId header with prefix
+        $parts[] = 'x-digipost-userid: '.($headers['X-Digipost-UserId'] ?? '');
+
+        // Query parameters (lowercase, URL-encoded)
+        $parts[] = strtolower($queryString);
+
+        // Each line ends with \n, including the last line
+        return implode("\n", $parts)."\n";
     }
 }
