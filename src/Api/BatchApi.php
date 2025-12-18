@@ -30,7 +30,7 @@ final readonly class BatchApi
         $batch = Batch::create();
 
         $response = $this->httpClient->post(
-            "/api/v8/{$this->senderId}/batches",
+            '/batches',
             $batch->toXml(),
         );
 
@@ -43,7 +43,7 @@ final readonly class BatchApi
     public function getBatch(UuidInterface $batchId): Batch
     {
         $response = $this->httpClient->get(
-            "/api/v8/{$this->senderId}/batches/{$batchId->toString()}",
+            "/batches/{$batchId->toString()}",
         );
 
         return Batch::fromXml($response);
@@ -59,7 +59,7 @@ final readonly class BatchApi
         $multipart = $this->buildMultipartRequest($message, $documentContents);
 
         $response = $this->httpClient->postMultipart(
-            "/api/v8/{$this->senderId}/batches/{$batchId->toString()}/messages",
+            "/batches/{$batchId->toString()}/messages",
             $multipart,
         );
 

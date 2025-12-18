@@ -30,7 +30,7 @@ final readonly class UserApi
 
         $xmlString = $xml->asXML();
         $response = $this->httpClient->post(
-            "/api/v8/{$this->senderId}/user-accounts",
+            '/user-accounts',
             $xmlString !== false ? $xmlString : '',
         );
 

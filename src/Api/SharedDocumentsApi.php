@@ -28,7 +28,7 @@ final readonly class SharedDocumentsApi
     public function getSharedDocuments(UuidInterface $shareId): SharedDocuments
     {
         $response = $this->httpClient->get(
-            "/api/v8/{$this->senderId}/shared-documents/{$shareId->toString()}",
+            "/shared-documents/{$shareId->toString()}",
         );
 
         return SharedDocuments::fromXml($response);
@@ -52,7 +52,7 @@ final readonly class SharedDocumentsApi
     public function stopSharing(UuidInterface $shareId): void
     {
         $this->httpClient->delete(
-            "/api/v8/{$this->senderId}/shared-documents/{$shareId->toString()}",
+            "/shared-documents/{$shareId->toString()}",
         );
     }
 }

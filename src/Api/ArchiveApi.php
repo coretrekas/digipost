@@ -30,7 +30,7 @@ final readonly class ArchiveApi
      */
     public function getArchives(): Archives
     {
-        $response = $this->httpClient->get("/api/v8/{$this->senderId}/archives");
+        $response = $this->httpClient->get("/archives");
 
         return Archives::fromXml($response);
     }
@@ -41,7 +41,7 @@ final readonly class ArchiveApi
     public function getArchive(string $archiveName): Archive
     {
         $response = $this->httpClient->get(
-            "/api/v8/{$this->senderId}/archives/{$archiveName}",
+            "/archives/{$archiveName}",
         );
 
         return Archive::fromXml($response);
@@ -74,7 +74,7 @@ final readonly class ArchiveApi
         ];
 
         $response = $this->httpClient->postMultipart(
-            "/api/v8/{$this->senderId}/archives/{$archiveName}/documents",
+            "/archives/{$archiveName}/documents",
             $multipart,
         );
 
@@ -89,7 +89,7 @@ final readonly class ArchiveApi
     public function getDocument(string $archiveName, UuidInterface $documentUuid): ArchiveDocument
     {
         $response = $this->httpClient->get(
-            "/api/v8/{$this->senderId}/archives/{$archiveName}/documents/{$documentUuid->toString()}",
+            "/archives/{$archiveName}/documents/{$documentUuid->toString()}",
         );
 
         $element = new SimpleXMLElement($response);
@@ -127,7 +127,7 @@ final readonly class ArchiveApi
     public function getDocumentsByReferenceId(string $referenceId, string $archiveName = 'default'): Archive
     {
         $response = $this->httpClient->get(
-            "/api/v8/{$this->senderId}/archives/{$archiveName}/documents",
+            "/archives/{$archiveName}/documents",
             ['reference-id' => $referenceId],
         );
 

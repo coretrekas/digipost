@@ -28,7 +28,7 @@ final readonly class InboxApi
     public function getInbox(int $offset = 0, int $limit = 100): Inbox
     {
         $response = $this->httpClient->get(
-            "/api/v8/{$this->senderId}/inbox",
+            "/{$this->senderId}/inbox",
             [
                 'offset' => $offset,
                 'limit' => $limit,
@@ -44,7 +44,7 @@ final readonly class InboxApi
     public function getDocument(int $documentId): InboxDocument
     {
         $response = $this->httpClient->get(
-            "/api/v8/{$this->senderId}/inbox/{$documentId}",
+            "/{$this->senderId}/inbox/{$documentId}",
         );
 
         $element = new SimpleXMLElement($response);

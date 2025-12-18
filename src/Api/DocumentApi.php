@@ -27,7 +27,7 @@ final readonly class DocumentApi
     public function getDocumentStatus(UuidInterface $documentUuid): DocumentStatus
     {
         $response = $this->httpClient->get(
-            "/api/v8/{$this->senderId}/documents/{$documentUuid->toString()}/status",
+            "/documents/{$documentUuid->toString()}/status",
         );
 
         return DocumentStatus::fromXml($response);
@@ -56,7 +56,7 @@ final readonly class DocumentApi
         }
 
         $response = $this->httpClient->get(
-            "/api/v8/{$this->senderId}/documents/events",
+            '/documents/events',
             $params,
         );
 

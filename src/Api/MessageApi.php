@@ -34,7 +34,7 @@ final readonly class MessageApi
         $multipart = $this->buildMultipartRequest($message, $documentContents);
 
         $response = $this->httpClient->postMultipart(
-            "/api/v8/{$this->senderId}/message",
+            '/messages',
             $multipart,
         );
 
@@ -47,7 +47,7 @@ final readonly class MessageApi
     public function identify(Identification $identification): IdentificationResult
     {
         $response = $this->httpClient->post(
-            "/api/v8/{$this->senderId}/identification",
+            '/identification',
             $identification->toXml(),
         );
 
@@ -60,7 +60,7 @@ final readonly class MessageApi
     public function search(string $query): Recipients
     {
         $response = $this->httpClient->get(
-            "/api/v8/{$this->senderId}/recipients",
+            '/recipients/search',
             ['search' => $query],
         );
 
@@ -73,7 +73,7 @@ final readonly class MessageApi
     public function searchSuggest(string $query): Autocomplete
     {
         $response = $this->httpClient->get(
-            "/api/v8/{$this->senderId}/recipients/autocomplete",
+            '/recipients/autocomplete',
             ['search' => $query],
         );
 
@@ -85,7 +85,7 @@ final readonly class MessageApi
      */
     public function getSenderInformation(): SenderInformation
     {
-        $response = $this->httpClient->get("/api/v8/{$this->senderId}");
+        $response = $this->httpClient->get('/sender');
 
         return SenderInformation::fromXml($response);
     }
