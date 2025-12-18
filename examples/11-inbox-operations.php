@@ -37,8 +37,9 @@ foreach ($inbox->documents as $document) {
     echo "File type: {$document->fileType->value}\n";
     echo 'Opened: '.($document->opened ? 'Yes' : 'No')."\n";
 
-    // Get document content
-    $content = $client->getInboxDocumentContent($document);
+    // Get document content (returns a StreamInterface)
+    $contentStream = $client->getInboxDocumentContent($document);
+    $content = $contentStream->getContents();
     echo 'Content size: '.strlen($content)." bytes\n";
 
     // Save to file

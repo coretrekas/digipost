@@ -44,7 +44,7 @@ $archiveDocument = ArchiveDocumentContent::create(
 $archivedDocument = $client->archiveDocument($archiveDocument);
 
 echo "Document archived successfully!\n";
-echo "Archive UUID: {$archivedDocument->uuid}\n";
+echo "Archive UUID: {$archivedDocument->uuid->toString()}\n";
 echo "Reference ID: {$archivedDocument->referenceId}\n";
 
 // List all archives
@@ -58,7 +58,7 @@ foreach ($archives->archives as $archive) {
 $foundDocuments = $client->getArchiveDocumentsByReferenceId('contract-2024-001');
 echo "\nDocuments with reference ID 'contract-2024-001':\n";
 foreach ($foundDocuments->documents as $doc) {
-    echo "- {$doc->fileName} (UUID: {$doc->uuid})\n";
+    echo "- {$doc->fileName} (UUID: {$doc->uuid->toString()})\n";
 }
 
 // Get specific archive by name

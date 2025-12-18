@@ -35,7 +35,7 @@ $recipients = [
 
 // Create a batch
 $batch = $client->createBatch();
-echo "Batch created: {$batch->uuid}\n";
+echo "Batch created: {$batch->uuid->toString()}\n";
 
 // Add messages to the batch
 foreach ($recipients as $index => $recipient) {

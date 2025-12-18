@@ -34,12 +34,7 @@ echo "==============================\n\n";
 foreach ($events->events as $event) {
     echo "Event: {$event->type->value}\n";
     echo "Time: {$event->timestamp->format('Y-m-d H:i:s')}\n";
-    echo "Document UUID: {$event->documentUuid}\n";
-
-    if ($event->messageId !== null) {
-        echo "Message ID: {$event->messageId}\n";
-    }
-
+    echo "Document UUID: {$event->uuid->toString()}\n";
     echo "---\n";
 }
 

@@ -33,13 +33,13 @@ $result = $client->identify($identification);
 
 if ($result->isDigipostUser()) {
     echo "Recipient has a Digipost account - can send digitally!\n";
-    echo "Digipost address: {$result->digipostAddress}\n";
+    echo "Digipost address: {$result->digipostAddress->value}\n";
 } elseif ($result->isIdentified()) {
     echo "Recipient is identified but does not have Digipost.\n";
     echo "Consider using print fallback.\n";
 } else {
     echo "Recipient could not be identified.\n";
-    echo "Result code: {$result->resultCode->value}\n";
+    echo "Result code: {$result->result->value}\n";
 }
 
 // You can also identify by personal identification number (fødselsnummer)

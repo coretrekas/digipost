@@ -24,24 +24,24 @@ $client = new DigipostClient($config, SenderId::of(123456), $signer);
 // Search for recipients by name or address
 $searchTerm = 'john';
 
-$results = $client->autocomplete($searchTerm);
+$results = $client->searchSuggest($searchTerm);
 
-echo "Search results for '{$searchTerm}':\n";
-echo "===================================\n\n";
+echo "Search suggestions for '{$searchTerm}':\n";
+echo "=======================================\n\n";
 
-foreach ($results->recipients as $recipient) {
-    echo "Name: {$recipient->firstName} {$recipient->lastName}\n";
-
-    if ($recipient->digipostAddress !== null) {
-        echo "Digipost address: {$recipient->digipostAddress->value}\n";
-    }
-
-    echo "---\n";
+foreach ($results->suggestions as $suggestion) {
+    echo "- {$suggestion}\n";
 }
 
-if (count($results->recipients) === 0) {
-    echo "No recipients found matching '{$searchTerm}'\n";
+if (count($results->suggestions) === 0) {
+    echo "No suggestions found matching '{$searchTerm}'\n";
 }
 
 // The autocomplete is useful for building recipient search interfaces
 // where users can type a name and see matching Digipost users.
+
+// For full recipient search with details, use the search method:
+// $recipients = $client->search($searchTerm);
+// foreach ($recipients->recipients as $recipient) {
+//     echo "Name: {$recipient->firstName} {$recipient->lastName}\n";
+// }
