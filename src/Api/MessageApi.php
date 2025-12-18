@@ -94,7 +94,7 @@ final readonly class MessageApi
      *
      * @param array<string, string> $documentContents
      *
-     * @return array<int, array{name: string, contents: string, headers?: array<string, string>}>
+     * @return array<int, array{name: string, contents: string, headers?: array<string, string>, filename?: string}>
      */
     private function buildMultipartRequest(Message $message, array $documentContents): array
     {
@@ -102,7 +102,10 @@ final readonly class MessageApi
             [
                 'name' => 'message',
                 'contents' => $message->toXml(),
-                'headers' => ['Content-Type' => 'application/vnd.digipost-v8+xml'],
+                'filename' => 'message',
+                'headers' => [
+                    'Content-Type' => 'application/vnd.digipost-v8+xml',
+                ],
             ],
         ];
 
@@ -112,7 +115,10 @@ final readonly class MessageApi
             $multipart[] = [
                 'name' => $primaryUuid,
                 'contents' => $documentContents[$primaryUuid],
-                'headers' => ['Content-Type' => $message->primaryDocument->fileType->getMimeType()],
+                'filename' => $primaryUuid,
+                'headers' => [
+                    'Content-Type' => $message->primaryDocument->fileType->getMimeType(),
+                ],
             ];
         }
 
@@ -123,7 +129,10 @@ final readonly class MessageApi
                 $multipart[] = [
                     'name' => $attachmentUuid,
                     'contents' => $documentContents[$attachmentUuid],
-                    'headers' => ['Content-Type' => $attachment->fileType->getMimeType()],
+                    'filename' => $attachmentUuid,
+                    'headers' => [
+                        'Content-Type' => $attachment->fileType->getMimeType(),
+                    ],
                 ];
             }
         }

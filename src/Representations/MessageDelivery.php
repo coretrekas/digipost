@@ -48,7 +48,7 @@ final readonly class MessageDelivery
 
         return new self(
             messageId: (string) $element->{'message-id'},
-            channel: Channel::from((string) $element->channel),
+            channel: Channel::from((string) $element->{'delivery-method'}),
             status: DeliveryStatus::from((string) $element->status),
             deliveryTime: new DateTimeImmutable((string) $element->{'delivery-time'}),
             documents: $documents,

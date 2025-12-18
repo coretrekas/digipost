@@ -85,7 +85,7 @@ final readonly class DigipostHttpClient
     public function postMultipart(string $path, array $multipart, array $headers = []): string
     {
         $stream = new MultipartStream($multipart);
-        $headers['Content-Type'] = 'multipart/mixed; boundary='.$stream->getBoundary();
+        $headers['Content-Type'] = 'multipart/vnd.digipost-v8+xml; boundary='.$stream->getBoundary();
 
         $response = $this->request('POST', $path, $headers, $stream);
 
