@@ -68,13 +68,13 @@ final readonly class DigipostClient
     ) {
         $this->httpClient = new DigipostHttpClient($config, $senderId, $signer);
 
-        $this->messageApi = new MessageApi($this->httpClient, $senderId);
+        $this->messageApi = new MessageApi($this->httpClient);
         $this->inboxApi = new InboxApi($this->httpClient, $senderId);
-        $this->documentApi = new DocumentApi($this->httpClient, $senderId);
-        $this->archiveApi = new ArchiveApi($this->httpClient, $senderId);
-        $this->batchApi = new BatchApi($this->httpClient, $senderId);
-        $this->sharedDocumentsApi = new SharedDocumentsApi($this->httpClient, $senderId);
-        $this->userApi = new UserApi($this->httpClient, $senderId);
+        $this->documentApi = new DocumentApi($this->httpClient);
+        $this->archiveApi = new ArchiveApi($this->httpClient);
+        $this->batchApi = new BatchApi($this->httpClient);
+        $this->sharedDocumentsApi = new SharedDocumentsApi($this->httpClient);
+        $this->userApi = new UserApi($this->httpClient);
     }
 
     /**

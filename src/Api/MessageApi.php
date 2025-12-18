@@ -12,7 +12,6 @@ use Coretrek\Digipost\Representations\Message;
 use Coretrek\Digipost\Representations\MessageDelivery;
 use Coretrek\Digipost\Representations\Recipients;
 use Coretrek\Digipost\Representations\SenderInformation;
-use Coretrek\Digipost\SenderId;
 
 /**
  * API for sending messages.
@@ -21,7 +20,6 @@ final readonly class MessageApi
 {
     public function __construct(
         private DigipostHttpClient $httpClient,
-        private SenderId $senderId,
     ) {}
 
     /**

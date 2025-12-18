@@ -7,7 +7,6 @@ namespace Coretrek\Digipost\Api;
 use Coretrek\Digipost\Http\DigipostHttpClient;
 use Coretrek\Digipost\Representations\PersonalIdentificationNumber;
 use Coretrek\Digipost\Representations\UserAccount;
-use Coretrek\Digipost\SenderId;
 use SimpleXMLElement;
 
 /**
@@ -17,7 +16,6 @@ final readonly class UserApi
 {
     public function __construct(
         private DigipostHttpClient $httpClient,
-        private SenderId $senderId,
     ) {}
 
     /**

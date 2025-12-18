@@ -7,7 +7,6 @@ namespace Coretrek\Digipost\Api;
 use Coretrek\Digipost\Http\DigipostHttpClient;
 use Coretrek\Digipost\Representations\SharedDocuments\SharedDocument;
 use Coretrek\Digipost\Representations\SharedDocuments\SharedDocuments;
-use Coretrek\Digipost\SenderId;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 use Ramsey\Uuid\UuidInterface;
@@ -19,7 +18,6 @@ final readonly class SharedDocumentsApi
 {
     public function __construct(
         private DigipostHttpClient $httpClient,
-        private SenderId $senderId,
     ) {}
 
     /**

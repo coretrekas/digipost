@@ -8,7 +8,6 @@ use Coretrek\Digipost\Http\DigipostHttpClient;
 use Coretrek\Digipost\Representations\Batch\Batch;
 use Coretrek\Digipost\Representations\Message;
 use Coretrek\Digipost\Representations\MessageDelivery;
-use Coretrek\Digipost\SenderId;
 use InvalidArgumentException;
 use Ramsey\Uuid\UuidInterface;
 
@@ -19,7 +18,6 @@ final readonly class BatchApi
 {
     public function __construct(
         private DigipostHttpClient $httpClient,
-        private SenderId $senderId,
     ) {}
 
     /**

@@ -7,7 +7,6 @@ namespace Coretrek\Digipost\Api;
 use Coretrek\Digipost\Http\DigipostHttpClient;
 use Coretrek\Digipost\Representations\DocumentEvents;
 use Coretrek\Digipost\Representations\DocumentStatus;
-use Coretrek\Digipost\SenderId;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
 
@@ -18,7 +17,6 @@ final readonly class DocumentApi
 {
     public function __construct(
         private DigipostHttpClient $httpClient,
-        private SenderId $senderId,
     ) {}
 
     /**

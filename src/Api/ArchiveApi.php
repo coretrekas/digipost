@@ -9,7 +9,6 @@ use Coretrek\Digipost\Representations\Archive\Archive;
 use Coretrek\Digipost\Representations\Archive\ArchiveDocument;
 use Coretrek\Digipost\Representations\Archive\ArchiveDocumentContent;
 use Coretrek\Digipost\Representations\Archive\Archives;
-use Coretrek\Digipost\SenderId;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 use Ramsey\Uuid\UuidInterface;
@@ -22,7 +21,6 @@ final readonly class ArchiveApi
 {
     public function __construct(
         private DigipostHttpClient $httpClient,
-        private SenderId $senderId,
     ) {}
 
     /**
