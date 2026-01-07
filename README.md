@@ -343,10 +343,11 @@ $inbox = $client->getInbox(offset: 0, limit: 100);
 
 foreach ($inbox->documents as $document) {
     echo "Document: {$document->subject}\n";
-    
-    // Get document content
-    $content = $client->getInboxDocumentContent($document);
-    
+
+    // Get document content (returns a StreamInterface)
+    $contentStream = $client->getInboxDocumentContent($document);
+    $content = $contentStream->getContents();
+
     // Delete document
     $client->deleteInboxDocument($document);
 }

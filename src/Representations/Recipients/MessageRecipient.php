@@ -16,7 +16,10 @@ final readonly class MessageRecipient
 {
     private function __construct(
         public ?PersonalIdentificationNumber $personalIdentificationNumber = null,
+        public ?OrganisationNumber $organisationNumber = null,
         public ?DigipostAddress $digipostAddress = null,
+        public ?EmailDetails $emailDetails = null,
+        public ?PeppolAddresses $peppolAddresses = null,
         public ?NameAndAddress $nameAndAddress = null,
         public ?BankAccountNumber $bankAccountNumber = null,
         public ?PrintDetails $printDetails = null,
@@ -36,11 +39,40 @@ final readonly class MessageRecipient
     }
 
     /**
+     * Create a recipient from an organisation number.
+     */
+    public static function fromOrganisationNumber(
+        OrganisationNumber $organisationNumber,
+        ?PrintDetails $printDetails = null,
+    ): self {
+        return new self(
+            organisationNumber: $organisationNumber,
+            printDetails: $printDetails,
+        );
+    }
+
+    /**
      * Create a recipient from a Digipost address.
      */
     public static function fromDigipostAddress(DigipostAddress $address): self
     {
         return new self(digipostAddress: $address);
+    }
+
+    /**
+     * Create a recipient from email details.
+     */
+    public static function fromEmailDetails(EmailDetails $emailDetails): self
+    {
+        return new self(emailDetails: $emailDetails);
+    }
+
+    /**
+     * Create a recipient from PEPPOL addresses.
+     */
+    public static function fromPeppolAddresses(PeppolAddresses $peppolAddresses): self
+    {
+        return new self(peppolAddresses: $peppolAddresses);
     }
 
     /**
@@ -74,8 +106,20 @@ final readonly class MessageRecipient
             $recipient->addChild('personal-identification-number', $this->personalIdentificationNumber->value);
         }
 
+        if ($this->organisationNumber instanceof OrganisationNumber) {
+            $recipient->addChild('organisation-number', $this->organisationNumber->value);
+        }
+
         if ($this->digipostAddress instanceof DigipostAddress) {
             $recipient->addChild('digipost-address', $this->digipostAddress->value);
+        }
+
+        if ($this->emailDetails instanceof EmailDetails) {
+            $this->emailDetails->addToXml($recipient);
+        }
+
+        if ($this->peppolAddresses instanceof PeppolAddresses) {
+            $this->peppolAddresses->addToXml($recipient);
         }
 
         if ($this->nameAndAddress instanceof NameAndAddress) {
