@@ -38,6 +38,6 @@ final readonly class DigipostAddress implements Stringable
             return false;
         }
 
-        return (bool) preg_match('/^[a-zA-Z0-9][a-zA-Z0-9.\-]*[a-zA-Z0-9]$/', $value);
+        return (bool) preg_match('/^[a-zA-Z0-9][a-zA-Z0-9.\-#]*[a-zA-Z0-9]$/', $value);
     }
 }
